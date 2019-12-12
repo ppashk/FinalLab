@@ -30,9 +30,7 @@ public class LocalizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession();
+        HttpSession session = ((HttpServletRequest) request).getSession();
 
         setLocale(session);
         setBundle(session);
@@ -43,16 +41,22 @@ public class LocalizationFilter implements Filter {
     private void setLocale(HttpSession session) {
         String locale = (String) session.getAttribute(LOCALE);
         if (locale == null) {
-            LOG.debug("Set locale to session");
+            LOG.debug("Set locale " + defaultLocale + " to session");
             session.setAttribute(LOCALE, defaultLocale);
+        } else {
+            LOG.debug("Set locale " + locale + " to session");
+            session.setAttribute(LOCALE, locale);
         }
     }
 
     private void setBundle(HttpSession session) {
-        String bundle = (String) session.getAttribute(BUNDLE);
-        if (bundle == null) {
-            LOG.debug("Set bundle to session");
+        String locale = (String) session.getAttribute(LOCALE);
+        if ("en".equals(locale)) {
+            LOG.debug("Set bundle " + defaultBundle + " to session");
             session.setAttribute(BUNDLE, defaultBundle);
+        } else {
+            LOG.debug("Set bundle messages_ru to session");
+            session.setAttribute(BUNDLE, "messages_ru");
         }
     }
 

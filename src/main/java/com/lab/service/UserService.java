@@ -4,8 +4,6 @@ import com.lab.dao.EntityDao;
 import com.lab.entity.User;
 import com.lab.enums.DaoType;
 import com.lab.factory.DaoFactory;
-import com.lab.web.form.RegistrationForm;
-import com.lab.web.form.mapper.FormEntityMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,24 +37,6 @@ public class UserService {
 
         return all.stream()
                 .anyMatch(u -> u.getUsername().equals(login));
-    }
-
-    public Optional<User> createUser(RegistrationForm registrationForm) {
-        boolean result = userDao.create(getFormEntityMapper().map(registrationForm));
-
-        return result ?
-                findByLogin(registrationForm.getUsername())
-                : Optional.empty();
-    }
-
-    public User getUser(int id) {
-        return userDao.getById(id, false);
-    }
-
-    public FormEntityMapper<User, RegistrationForm> getFormEntityMapper() {
-        return form -> new User(0, form.getUsername(),
-                form.getPassword(),
-                form.getRole());
     }
 
     public void setUserDao(EntityDao<User> userDao) {

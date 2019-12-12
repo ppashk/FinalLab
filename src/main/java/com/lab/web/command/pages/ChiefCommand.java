@@ -35,14 +35,17 @@ public class ChiefCommand extends MultipleMethodCommand {
         if ("cancelReceipt".equals(action)) {
             if (receiptService.deleteReceipt(Integer.parseInt(request.getParameter("receiptId")))) {
                 request.setAttribute("message", "chief.money.returned");
+                request.setAttribute("receipts", receiptService.getAll());
                 return new Page(CHIEF_CASHIER_PAGE);
             }
         } else if ("cancelLine".equals(action)) {
-            if (receiptService.deleteLine(request.getParameter("credits"))) {
+            if (receiptService.deleteLine(request.getParameter("idOrName"))) {
                 request.setAttribute("message", "chief.money.returned");
+                request.setAttribute("receipts", receiptService.getAll());
                 return new Page(CHIEF_CASHIER_PAGE);
             } else {
                 request.setAttribute("message", "chief.incorrect.input");
+                request.setAttribute("receipts", receiptService.getAll());
                 return new Page(CHIEF_CASHIER_PAGE);
             }
         } else if ("xReport".equals(action)) {
@@ -53,6 +56,7 @@ public class ChiefCommand extends MultipleMethodCommand {
             return new Page(REPORT_PAGE, true);
         } else if ("createXReport".equals(action)) {
             if (reportService.createXReport())
+                request.setAttribute("receipts", receiptService.getAll());
                 return new Page(CHIEF_CASHIER_PAGE);
         }
 

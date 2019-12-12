@@ -28,9 +28,11 @@ public class LoaderCommand extends MultipleMethodCommand {
 
         if ("createProduct".equals(action)) {
             storageService.createProduct(request.getParameter("name"), Integer.parseInt(request.getParameter("price")), Integer.parseInt(request.getParameter("quantity")));
+            request.setAttribute("products", storageService.getAll());
             return new Page(LOADER_PAGE);
         } else if ("updateProduct".equals(action)) {
             storageService.updateProduct(Integer.parseInt(request.getParameter("id")), Integer.parseInt(request.getParameter("quantity")));
+            request.setAttribute("products", storageService.getAll());
             return new Page(LOADER_PAGE);
         }
 

@@ -30,8 +30,10 @@ public class CashierCommand extends MultipleMethodCommand {
         String action = request.getParameter("action");
 
         if ("createLine".equals(action)) {
-            receiptService.addLine(request.getParameter("credits"), Integer.parseInt(request.getParameter("quantity")));
-            return new Page(CASHIER_PAGE, true);
+            receiptService.addLine(request.getParameter("idOrName"), Integer.parseInt(request.getParameter("quantity")));
+            request.setAttribute("lines", receiptService.getLinesByReceiptId());
+            request.setAttribute("receipt", receiptService.getReceiptById());
+            return new Page(CASHIER_PAGE);
         } else if ("closeReceipt".equals(action)) {
             receiptService.closeReceipt();
             return new Page(HOME_REDIRECT, true);
