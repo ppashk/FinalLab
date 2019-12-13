@@ -19,7 +19,6 @@
             <table class="table table-striped table-hover">
                 <thead>
                 <tr class="">
-                    <th><fmt:message key = "id"/></th>
                     <th><fmt:message key = "name"/></th>
                     <th><fmt:message key = "price"/></th>
                     <th><fmt:message key = "quantity"/></th>
@@ -28,7 +27,6 @@
                 </thead>
                 <c:forEach items="${lines}" var="line">
                     <tr>
-                        <td>${line.id}</td>
                         <td>${line.name}</td>
                         <td>${line.price}</td>
                         <td>${line.quantity}</td>
@@ -36,7 +34,6 @@
                     </tr>
                 </c:forEach>
                 <tr>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

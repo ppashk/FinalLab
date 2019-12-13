@@ -2,6 +2,7 @@ package com.lab.web.command.common;
 
 import com.lab.entity.User;
 import com.lab.factory.ServiceFactory;
+import com.lab.service.ReportService;
 import com.lab.service.UserService;
 import com.lab.web.command.MultipleMethodCommand;
 import com.lab.web.data.Page;
@@ -18,9 +19,11 @@ public class LoginCommand extends MultipleMethodCommand {
     private static final Logger LOG = Logger.getLogger(LoginCommand.class);
 
     private UserService userService;
+    private ReportService reportService;
 
     public LoginCommand() {
         this.userService = ServiceFactory.getUserService();
+        this.reportService = ServiceFactory.getReportService();
     }
 
     @Override
@@ -41,6 +44,10 @@ public class LoginCommand extends MultipleMethodCommand {
             LOG.info("Login success");
             User user = optionalUser.get();
             session.setAttribute("user", user);
+            if (userService.isCashier(user)) {
+                reportService.createXReport();
+                reportService.createZReport(user);
+            }
             return new Page(HOME_REDIRECT,true);
         }
 

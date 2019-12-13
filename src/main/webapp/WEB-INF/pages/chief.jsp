@@ -18,18 +18,34 @@
             </c:if>
             <table class="table table-striped table-hover">
                 <thead>
-                <tr class="">
-                    <th><fmt:message key = "id"/></th>
-                    <th><fmt:message key = "total.price"/></th>
-                    <th><fmt:message key = "isClosed"/></th>
-                </tr>
+                    <tr>
+                        <th><fmt:message key = "id"/></th>
+                        <th><fmt:message key = "total.price"/></th>
+                        <th><fmt:message key = "isClosed"/></th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <c:forEach items="${receipts}" var="receipt">
-                    <tr>
+                    <tr class="bg-primary">
                         <td>${receipt.id}</td>
                         <td>${receipt.totalPrice}</td>
                         <td>${receipt.closed}</td>
+                        <td></td>
                     </tr>
+                    <tr class="bg-secondary">
+                        <th><fmt:message key = "id"/></th>
+                        <th><fmt:message key = "name"/></th>
+                        <th><fmt:message key = "price"/></th>
+                        <th><fmt:message key = "quantity"/></th>
+                    </tr>
+                    <c:forEach items="${receipt.lines}" var="line">
+                        <tr class="bg-secondary">
+                            <td>${line.id}</td>
+                            <td>${line.name}</td>
+                            <td>${line.price}</td>
+                            <td>${line.quantity}</td>
+                        </tr>
+                    </c:forEach>
                 </c:forEach>
             </table>
             <c:if test="${not empty message}">

@@ -1,6 +1,7 @@
 package com.lab.service;
 
 import com.lab.dao.EntityDao;
+import com.lab.entity.Line;
 import com.lab.entity.Report;
 import com.lab.entity.ReportLine;
 import com.lab.entity.User;
@@ -52,12 +53,12 @@ public class ReportService {
         return reportDao.create(new Report(0, false, ReportType.Z_REPORT, user.getUsername()));
     }
 
-    public boolean updateReports(String name, int price, int quantity) {
+    public boolean updateReports(Line line) {
         List<Report> reports = reportDao.getAll();
         for (Report report : reports) {
             if (!report.isClosed()) {
-                reportLineDao.create(new ReportLine(name, price, quantity, report.getId()));
-                report.setTotalPrice(report.getTotalPrice() + price * quantity);
+                reportLineDao.create(new ReportLine(line.getName(), line.getPrice(), line.getQuantity(), report.getId()));
+                report.setTotalPrice(report.getTotalPrice() + line.getPrice() * line.getQuantity());
                 reportDao.update(report);
             }
         }
@@ -71,7 +72,7 @@ public class ReportService {
     private boolean closeReport(ReportType reportType) {
         List<Report> reports = reportDao.getAll();
         for (Report report : reports) {
-            if (!report.isClosed() && report.getReportType().equals(reportType)) {
+            if (report.getReportType().equals(reportType)) {
                 report.setClosed(true);
                 return reportDao.update(report);
             }

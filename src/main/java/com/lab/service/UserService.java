@@ -3,6 +3,7 @@ package com.lab.service;
 import com.lab.dao.EntityDao;
 import com.lab.entity.User;
 import com.lab.enums.DaoType;
+import com.lab.enums.Role;
 import com.lab.factory.DaoFactory;
 
 import java.util.List;
@@ -24,22 +25,7 @@ public class UserService {
                 .findFirst();
     }
 
-    public Optional<User> findByLogin(String login) {
-        List<User> all = userDao.getAll();
-
-        return all.stream()
-                .filter(u -> u.getUsername().equals(login))
-                .findFirst();
-    }
-
-    public boolean isExist(String login) {
-        List<User> all = userDao.getAll();
-
-        return all.stream()
-                .anyMatch(u -> u.getUsername().equals(login));
-    }
-
-    public void setUserDao(EntityDao<User> userDao) {
-        this.userDao = userDao;
+    public boolean isCashier(User user) {
+        return user.getRole().equals(Role.CASHIER);
     }
 }

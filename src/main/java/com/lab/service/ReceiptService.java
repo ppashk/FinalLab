@@ -6,7 +6,9 @@ import com.lab.entity.Product;
 import com.lab.entity.Receipt;
 import com.lab.enums.DaoType;
 import com.lab.factory.DaoFactory;
+import com.lab.factory.ServiceFactory;
 
+import javax.naming.LinkRef;
 import java.util.List;
 
 public class ReceiptService {
@@ -60,17 +62,18 @@ public class ReceiptService {
         return receiptDao.remove(receipt);
     }
 
-    private boolean createLine(Receipt receipt, Product product, int quantity) {
-        if (!lineDao.create(new Line(product.getName(), product.getPrice(), quantity, getReceiptId())))
-            return false;
+    private Line createLine(Receipt receipt, Product product, int quantity) {
+        Line line = new Line(product.getName(), product.getPrice(), quantity, getReceiptId());
+        if (!lineDao.create(line))
+            return line;
         product.setQuantity(product.getQuantity() - quantity);
         productDao.update(product);
         receipt.setTotalPrice(receipt.getTotalPrice() + product.getPrice() * quantity);
         receiptDao.update(receipt);
-        return true;
+        return line;
     }
 
-    public boolean addLine(String param, int quantity) {
+    public Line addLine(String param, int quantity) {
         Receipt receipt = getReceipt();
         List<Product> products = productDao.getAll();
 
@@ -80,10 +83,10 @@ public class ReceiptService {
                     return createLine(receipt, product, quantity);
                 }
             } catch (NumberFormatException nfe) {
-                return false;
+                return null;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean deleteLine(String param) {

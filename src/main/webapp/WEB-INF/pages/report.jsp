@@ -18,43 +18,36 @@
             </c:if>
             <table class="table table-striped table-hover">
                 <thead>
-                <tr class="">
+                <tr>
                     <th><fmt:message key = "id"/></th>
-                    <th><fmt:message key = "name"/></th>
-                    <th><fmt:message key = "price"/></th>
-                    <th><fmt:message key = "quantity"/></th>
+                    <th><fmt:message key = "total.price"/></th>
+                    <th><fmt:message key = "isClosed"/></th>
+                    <th><fmt:message key = "login.user"/></th>
                 </tr>
                 </thead>
-                <c:forEach items="${products}" var="product">
-                    <tr>
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td>${product.quantity}</td>
+                <c:forEach items="${reports}" var="report">
+                    <tr class="bg-primary">
+                        <td>${report.id}</td>
+                        <td>${report.totalPrice}</td>
+                        <td>${report.closed}</td>
+                        <td>${report.username}</td>
                     </tr>
+                    <tr class="bg-secondary">
+                        <th><fmt:message key = "id"/></th>
+                        <th><fmt:message key = "name"/></th>
+                        <th><fmt:message key = "price"/></th>
+                        <th><fmt:message key = "quantity"/></th>
+                    </tr>
+                    <c:forEach items="${report.reportLines}" var="reportLine">
+                        <tr class="bg-secondary">
+                            <td>${reportLine.id}</td>
+                            <td>${reportLine.name}</td>
+                            <td>${reportLine.price}</td>
+                            <td>${reportLine.quantity}</td>
+                        </tr>
+                    </c:forEach>
                 </c:forEach>
             </table>
-            <form action="loader" method="post">
-                <label>
-                    <input type="text" name="name" placeholder="<fmt:message key = "name"/>" required>
-                </label>
-                <label>
-                    <input type="number" name="price" placeholder="<fmt:message key = "price"/>" required>
-                </label>
-                <label>
-                    <input type="number" name="quantity" placeholder="<fmt:message key = "quantity"/>" required>
-                </label>
-                <button type="submit" name="action" value="createProduct" class="btn"><fmt:message key = "loader.create"/></button>
-            </form>
-            <form action="loader" method="post">
-                <label>
-                    <input type="number" name="id" placeholder="<fmt:message key = "id"/>" required>
-                </label>
-                <label>
-                    <input type="number" name="quantity" placeholder="<fmt:message key = "quantity"/>" required>
-                </label>
-                <button type="submit" name="action" value="updateProduct" class="btn"><fmt:message key = "loader.create"/></button>
-            </form>
         </main>
     </div>
 </body>

@@ -2,6 +2,7 @@ package com.lab.entity;
 
 import com.lab.enums.ReportType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Report {
@@ -20,6 +21,7 @@ public class Report {
         this.isClosed = isClosed;
         this.reportType = reportType;
         this.username = username;
+        this.reportLines = new ArrayList<>();
     }
 
     public Report(int id, int totalPrice, boolean isClosed, ReportType reportType, String username) {
@@ -28,6 +30,7 @@ public class Report {
         this.isClosed = isClosed;
         this.reportType = reportType;
         this.username = username;
+        this.reportLines = new ArrayList<>();
     }
 
     public int getId() {

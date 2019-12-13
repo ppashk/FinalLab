@@ -1,9 +1,6 @@
 package com.lab.factory;
 
-import com.lab.service.ReceiptService;
-import com.lab.service.ReportService;
-import com.lab.service.StorageService;
-import com.lab.service.UserService;
+import com.lab.service.*;
 
 public class ServiceFactory {
     private static StorageService storageService = new StorageService();
