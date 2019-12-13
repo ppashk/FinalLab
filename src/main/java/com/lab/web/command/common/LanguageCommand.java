@@ -9,6 +9,7 @@ import static com.lab.constant.PageConstants.HOME_REDIRECT;
 
 public class LanguageCommand implements Command {
     private static final String LOCALE = "locale";
+    private static final String BUNDLE = "bundle";
 
     @Override
     public Page perform(HttpServletRequest request) {
@@ -16,6 +17,7 @@ public class LanguageCommand implements Command {
 
         if (locale != null) {
             request.getSession().setAttribute(LOCALE, locale);
+            request.getSession().setAttribute(BUNDLE, "messages_" + locale);
         }
 
         return new Page(HOME_REDIRECT, true);

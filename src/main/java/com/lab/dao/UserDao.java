@@ -20,7 +20,7 @@ public class UserDao extends AbstractDao<User>{
             + PASSWORD + ", "
             + ROLE + ") VALUE (?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE `user` SET"
+    private static final String UPDATE = "UPDATE `user` SET "
             + USERNAME + "= ?, "
             + PASSWORD + "= ?, "
             + ROLE + "= ? WHERE "

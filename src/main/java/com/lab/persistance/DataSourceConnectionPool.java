@@ -26,7 +26,7 @@ public class DataSourceConnectionPool {
     private DataSourceConnectionPool() {
     }
 
-    private static Connection getConnection() {
+    public static Connection getConnection() {
 
         Connection connection = null;
         try {
@@ -38,7 +38,9 @@ public class DataSourceConnectionPool {
         return connection;
     }
 
+
     public static PreparedStatement getPreparedStatement(String query) throws SQLException {
         return getConnection().prepareStatement(query);
     }
+
 }

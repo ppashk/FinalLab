@@ -16,7 +16,7 @@ public class ReceiptDao extends AbstractDao<Receipt> {
             + TOTAL_PRICE + ", "
             + IS_CLOSED + ") VALUE (?, ?)";
 
-    private static final String UPDATE = "UPDATE receipt SET"
+    private static final String UPDATE = "UPDATE receipt SET "
             + TOTAL_PRICE + "= ?, "
             + IS_CLOSED + "= ? WHERE "
             + ID + " = ?";

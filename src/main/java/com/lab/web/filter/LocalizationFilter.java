@@ -43,20 +43,14 @@ public class LocalizationFilter implements Filter {
         if (locale == null) {
             LOG.debug("Set locale " + defaultLocale + " to session");
             session.setAttribute(LOCALE, defaultLocale);
-        } else {
-            LOG.debug("Set locale " + locale + " to session");
-            session.setAttribute(LOCALE, locale);
         }
     }
 
     private void setBundle(HttpSession session) {
-        String locale = (String) session.getAttribute(LOCALE);
-        if ("en".equals(locale)) {
+        String bundle = (String) session.getAttribute(BUNDLE);
+        if (bundle == null) {
             LOG.debug("Set bundle " + defaultBundle + " to session");
             session.setAttribute(BUNDLE, defaultBundle);
-        } else {
-            LOG.debug("Set bundle messages_ru to session");
-            session.setAttribute(BUNDLE, "messages_ru");
         }
     }
 

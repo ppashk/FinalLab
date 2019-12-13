@@ -28,7 +28,7 @@
                     <tr>
                         <td>${receipt.id}</td>
                         <td>${receipt.totalPrice}</td>
-                        <td>${receipt.isClosed}</td>
+                        <td>${receipt.closed}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -47,13 +47,13 @@
                 </label>
                 <button type="submit" name="action" value="cancelLine" class="btn"><fmt:message key = "chief.cancel.line"/></button>
             </form>
-            <form action="chief">
+            <form action="chief" method="post">
                 <button type="submit" name="action" value="xReport" class="btn"><fmt:message key = "chief.x.report"/></button>
             </form>
-            <form action="chief">
+            <form action="chief" method="post">
                 <button type="submit" name="action" value="zReport" class="btn"><fmt:message key = "chief.z.report"/></button>
             </form>
-            <form action="chief">
+            <form action="chief" method="post">
                 <button type="submit" name="action" value="createXReport" class="btn"><fmt:message key = "chief.create.report"/></button>
             </form>
         </main>

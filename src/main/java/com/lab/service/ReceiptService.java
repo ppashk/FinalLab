@@ -13,7 +13,6 @@ public class ReceiptService {
     private EntityDao<Receipt> receiptDao;
     private EntityDao<Line> lineDao;
     private EntityDao<Product> productDao;
-    private int receiptId = 0;
 
     public ReceiptService() {
         this.receiptDao = DaoFactory.getEntityDao(DaoType.RECEIPT);
@@ -21,33 +20,33 @@ public class ReceiptService {
         this.productDao = DaoFactory.getEntityDao(DaoType.PRODUCT);
     }
 
-    public boolean createReceipt() {
-        if (receiptId == 0){
-            receiptId++;
-            Receipt receipt = new Receipt(0, false);
-            return receiptDao.create(receipt);
-        }
-
+    private Integer getReceiptId() {
         List<Receipt> receipts = receiptDao.getAll();
-
-        for (Receipt receipt : receipts) {
-            if (receipt.isClosed())
-                receiptId = receipt.getId();
-                receipts.remove(receipt);
+        try {
+            for (Receipt receipt : receipts) {
+                if (!receipt.isClosed())
+                    return receipt.getId();
+            }
+        } catch (Exception e) {
+            return 1;
         }
+        return null;
+    }
 
-        if (receipts.isEmpty()){
-            receiptId++;
+    public Receipt getReceipt() {
+        return getReceiptById(getReceiptId());
+    }
+
+    public boolean createReceipt() {
+        if (getReceiptId() == null){
             Receipt receipt = new Receipt(0, false);
             return receiptDao.create(receipt);
-        } else
-            receiptId++;
-
+        }
         return false;
     }
 
     public boolean closeReceipt() {
-        Receipt receipt = getReceiptById();
+        Receipt receipt = getReceipt();
         receipt.setClosed(true);
         return receiptDao.update(receipt);
     }
@@ -61,18 +60,27 @@ public class ReceiptService {
         return receiptDao.remove(receipt);
     }
 
+    private boolean createLine(Receipt receipt, Product product, int quantity) {
+        if (!lineDao.create(new Line(product.getName(), product.getPrice(), quantity, getReceiptId())))
+            return false;
+        product.setQuantity(product.getQuantity() - quantity);
+        productDao.update(product);
+        receipt.setTotalPrice(receipt.getTotalPrice() + product.getPrice() * quantity);
+        receiptDao.update(receipt);
+        return true;
+    }
+
     public boolean addLine(String param, int quantity) {
-        Receipt receipt = getReceiptById();
+        Receipt receipt = getReceipt();
         List<Product> products = productDao.getAll();
 
         for (Product product : products) {
-            if (product.getId() == Integer.parseInt(param) || param.equals(product.getName()) && product.getQuantity() >= quantity) {
-                lineDao.create(new Line(product.getName(), product.getPrice(), quantity, receiptId));
-                product.setQuantity(product.getQuantity() - quantity);
-                productDao.update(product);
-                receipt.setTotalPrice(receipt.getTotalPrice() + product.getPrice() * quantity);
-                receiptDao.update(receipt);
-                return true;
+            try {
+                if (param.equals(product.getName()) || product.getId() == Integer.parseInt(param) && product.getQuantity() >= quantity) {
+                    return createLine(receipt, product, quantity);
+                }
+            } catch (NumberFormatException nfe) {
+                return false;
             }
         }
         return false;
@@ -80,22 +88,19 @@ public class ReceiptService {
 
     public boolean deleteLine(String param) {
         List<Line> lines = lineDao.getAll();
-        for (Line line : lines)
-            if (Integer.parseInt(param) == line.getId() || param.equals(line.getName()))
-                lineDao.remove(line);
-        return true;
-    }
-
-    public List<Line> getLinesByReceiptId() {
-        if (receiptId > 0 ) {
-            List<Line> lines = lineDao.getAll();
-            for (Line line : lines) {
-                if (line.getReceiptId() != receiptId)
-                    lines.remove(line);
+        for (Line line : lines) {
+            try {
+                if (Integer.parseInt(param) == line.getId() || param.equals(line.getName())) {
+                    Receipt receipt = getReceiptById(line.getReceiptId());
+                    receipt.setTotalPrice(receipt.getTotalPrice() - line.getPrice() * line.getQuantity());
+                    receiptDao.update(receipt);
+                    return lineDao.remove(line);
+                }
+            } catch (NumberFormatException nfe) {
+                return false;
             }
-            return lines;
         }
-        return null;
+        return false;
     }
 
     public List<Receipt> getAll() {
@@ -110,17 +115,6 @@ public class ReceiptService {
         }
 
         return receipts;
-    }
-    public Receipt getReceiptById() {
-        Receipt receipt = receiptDao.getById(receiptId, true);
-        List<Line> lines = lineDao.getAll();
-
-        for (Line line : lines) {
-            if (line.getReceiptId() == receiptId)
-                receipt.addLine(line);
-        }
-
-        return receipt;
     }
 
     private Receipt getReceiptById(int receiptId) {

@@ -21,7 +21,7 @@ public class LineDao extends AbstractDao<Line> {
             + QUANTITY + ", "
             + RECEIPT_ID + ") VALUE (?, ?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE line SET"
+    private static final String UPDATE = "UPDATE line SET "
             + NAME + "= ?, "
             + PRICE + "= ?, "
             + QUANTITY + "= ?, "

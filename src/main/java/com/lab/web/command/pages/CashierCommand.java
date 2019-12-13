@@ -20,8 +20,8 @@ public class CashierCommand extends MultipleMethodCommand {
     @Override
     protected Page performGet(HttpServletRequest request) {
         receiptService.createReceipt();
-        request.setAttribute("lines", receiptService.getLinesByReceiptId());
-        request.setAttribute("receipt", receiptService.getReceiptById());
+        request.setAttribute("lines", receiptService.getReceipt().getLines());
+        request.setAttribute("receipt", receiptService.getReceipt());
         return new Page(CASHIER_PAGE);
     }
 
@@ -31,8 +31,8 @@ public class CashierCommand extends MultipleMethodCommand {
 
         if ("createLine".equals(action)) {
             receiptService.addLine(request.getParameter("idOrName"), Integer.parseInt(request.getParameter("quantity")));
-            request.setAttribute("lines", receiptService.getLinesByReceiptId());
-            request.setAttribute("receipt", receiptService.getReceiptById());
+            request.setAttribute("lines", receiptService.getReceipt().getLines());
+            request.setAttribute("receipt", receiptService.getReceipt());
             return new Page(CASHIER_PAGE);
         } else if ("closeReceipt".equals(action)) {
             receiptService.closeReceipt();

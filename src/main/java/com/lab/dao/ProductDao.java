@@ -19,7 +19,7 @@ public class ProductDao extends AbstractDao<Product> {
             + PRICE + ", "
             + QUANTITY + ") VALUE (?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE storage SET"
+    private static final String UPDATE = "UPDATE storage SET "
             + NAME + "= ?, "
             + PRICE + "= ?, "
             + QUANTITY + "= ? WHERE "

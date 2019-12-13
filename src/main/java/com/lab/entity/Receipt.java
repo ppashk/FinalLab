@@ -1,5 +1,6 @@
 package com.lab.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Receipt {
@@ -14,12 +15,14 @@ public class Receipt {
     public Receipt(int totalPrice, boolean isClosed) {
         this.totalPrice = totalPrice;
         this.isClosed = isClosed;
+        this.lines = new ArrayList<>();
     }
 
     public Receipt(int id, int totalPrice, boolean isClosed) {
         this.id = id;
         this.totalPrice = totalPrice;
         this.isClosed = isClosed;
+        this.lines = new ArrayList<>();
     }
 
     public int getId() {
@@ -55,6 +58,6 @@ public class Receipt {
     }
 
     public void addLine(Line line) {
-        this.lines.add(line);
+        lines.add(line);
     }
 }

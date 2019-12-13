@@ -22,7 +22,7 @@ public class ReportDao extends AbstractDao<Report> {
             + REPORT_TYPE + ", "
             + USERNAME + ") VALUE (?, ?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE `report` SET"
+    private static final String UPDATE = "UPDATE `report` SET "
             + TOTAL_PRICE + "= ?, "
             + IS_CLOSED + "= ?, "
             + REPORT_TYPE + "= ?, "

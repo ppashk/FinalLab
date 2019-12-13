@@ -23,7 +23,7 @@
                     <th><fmt:message key = "name"/></th>
                     <th><fmt:message key = "price"/></th>
                     <th><fmt:message key = "quantity"/></th>
-                    <th></th>
+                    <th><fmt:message key = "total.price"/></th>
                 </tr>
                 </thead>
                 <c:forEach items="${lines}" var="line">
@@ -40,7 +40,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>${product.totalPrice}</td>
+                    <td>${receipt.totalPrice}</td>
                 </tr>
             </table>
             <form action="cashier" method="post">

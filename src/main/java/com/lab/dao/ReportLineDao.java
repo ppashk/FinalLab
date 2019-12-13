@@ -21,7 +21,7 @@ public class ReportLineDao extends AbstractDao<ReportLine> {
             + QUANTITY + ", "
             + REPORT_ID + ") VALUE (?, ?, ?, ?)";
 
-    private static final String UPDATE = "UPDATE reportLine SET"
+    private static final String UPDATE = "UPDATE reportLine SET "
             + NAME + "= ?, "
             + PRICE + "= ?, "
             + QUANTITY + "= ?, "
