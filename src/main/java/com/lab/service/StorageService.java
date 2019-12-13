@@ -18,13 +18,13 @@ public class StorageService {
         return productDao.getAll();
     }
 
-    public void updateProduct(int productId, int quantity) {
+    public boolean updateProduct(int productId, int quantity) {
         Product product = productDao.getById(productId, true);
         product.setQuantity(quantity);
-        productDao.update(product);
+        return productDao.update(product);
     }
 
-    public void createProduct(String name, int price, int quantity) {
-        productDao.create(new Product(name, price, quantity));
+    public boolean createProduct(String name, int price, int quantity) {
+        return productDao.create(new Product(name, price, quantity));
     }
 }

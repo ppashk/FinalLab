@@ -5,6 +5,7 @@ import com.lab.service.ReceiptService;
 import com.lab.service.ReportService;
 import com.lab.web.command.MultipleMethodCommand;
 import com.lab.web.data.Page;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,8 @@ import static com.lab.constant.PageConstants.CASHIER_PAGE;
 import static com.lab.constant.PageConstants.HOME_REDIRECT;
 
 public class CashierCommand extends MultipleMethodCommand {
+    private static final Logger LOG = Logger.getLogger(CashierCommand.class);
+
     private ReceiptService receiptService;
     private ReportService reportService;
 
@@ -22,7 +25,7 @@ public class CashierCommand extends MultipleMethodCommand {
 
     @Override
     protected Page performGet(HttpServletRequest request) {
-        receiptService.createReceipt();
+        LOG.info("Receipt created " + receiptService.createReceipt());
         request.setAttribute("lines", receiptService.getReceipt().getLines());
         request.setAttribute("receipt", receiptService.getReceipt());
         return new Page(CASHIER_PAGE);
@@ -33,12 +36,12 @@ public class CashierCommand extends MultipleMethodCommand {
         String action = request.getParameter("action");
 
         if ("createLine".equals(action)) {
-            reportService.updateReports(receiptService.addLine(request.getParameter("idOrName"), Integer.parseInt(request.getParameter("quantity"))));
+            LOG.info("Report updated " + reportService.updateReports(receiptService.addLine(request.getParameter("idOrName"), Integer.parseInt(request.getParameter("quantity")))));
             request.setAttribute("lines", receiptService.getReceipt().getLines());
             request.setAttribute("receipt", receiptService.getReceipt());
             return new Page(CASHIER_PAGE);
         } else if ("closeReceipt".equals(action)) {
-            receiptService.closeReceipt();
+            LOG.info("Receipt closed " + receiptService.closeReceipt());
             return new Page(HOME_REDIRECT, true);
         }
 

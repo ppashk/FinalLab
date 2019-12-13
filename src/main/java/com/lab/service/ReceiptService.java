@@ -79,7 +79,7 @@ public class ReceiptService {
 
         for (Product product : products) {
             try {
-                if (param.equals(product.getName()) || product.getId() == Integer.parseInt(param) && product.getQuantity() >= quantity) {
+                if (product.getName().equals(param) || product.getId() == Integer.parseInt(param) && product.getQuantity() >= quantity) {
                     return createLine(receipt, product, quantity);
                 }
             } catch (NumberFormatException nfe) {

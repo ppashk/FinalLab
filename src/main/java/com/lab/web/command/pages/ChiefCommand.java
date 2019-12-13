@@ -5,6 +5,7 @@ import com.lab.service.ReceiptService;
 import com.lab.service.ReportService;
 import com.lab.web.command.MultipleMethodCommand;
 import com.lab.web.data.Page;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import static com.lab.constant.PageConstants.CHIEF_CASHIER_PAGE;
 import static com.lab.constant.PageConstants.REPORT_PAGE;
 
 public class ChiefCommand extends MultipleMethodCommand {
+
     private ReceiptService receiptService;
     private ReportService reportService;
 
