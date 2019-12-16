@@ -52,6 +52,7 @@ nav > ul > li{
     display: inline-block;
     margin: 0 0 0 62px;
     float: right;
+
 }
 nav > ul > li:nth-child(-n+3){
     float: left;

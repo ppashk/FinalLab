@@ -9,10 +9,12 @@ import com.lab.enums.DaoType;
 import com.lab.enums.ReportType;
 import com.lab.enums.Role;
 import com.lab.factory.DaoFactory;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 public class ReportService {
+    private static final Logger LOG = Logger.getLogger(ReportService.class);
     private EntityDao<Report> reportDao;
     private EntityDao<ReportLine> reportLineDao;
 
@@ -32,14 +34,16 @@ public class ReportService {
     private List<Report> getReport(ReportType reportType) {
         List<Report> reports = reportDao.getAll();
         List<ReportLine> reportLines = reportLineDao.getAll();
-
-        for (Report report : reports) {
-            if (report.getReportType().equals(reportType)) {
+        for (int i = 0; i < reports.size(); i++) {
+            if (reports.get(i).getReportType().equals(reportType)) {
                 for (ReportLine reportLine : reportLines) {
-                    if (report.getId() == reportLine.getReportId())
-                        report.addLine(reportLine);
+                    if (reports.get(i).getId() == reportLine.getReportId())
+                        reports.get(i).addLine(reportLine);
                 }
-            } else reports.remove(report);
+            } else {
+                reports.remove(reports.get(i));
+                i--;
+            }
         }
         return reports;
     }
@@ -57,6 +61,7 @@ public class ReportService {
         List<Report> reports = reportDao.getAll();
         for (Report report : reports) {
             if (!report.isClosed()) {
+                LOG.info(line.getName()+ line.getPrice() + line.getQuantity()+ report.getId());
                 reportLineDao.create(new ReportLine(line.getName(), line.getPrice(), line.getQuantity(), report.getId()));
                 report.setTotalPrice(report.getTotalPrice() + line.getPrice() * line.getQuantity());
                 reportDao.update(report);

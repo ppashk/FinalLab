@@ -6,12 +6,12 @@ import com.lab.entity.Product;
 import com.lab.entity.Receipt;
 import com.lab.enums.DaoType;
 import com.lab.factory.DaoFactory;
-import com.lab.factory.ServiceFactory;
+import org.apache.log4j.Logger;
 
-import javax.naming.LinkRef;
 import java.util.List;
 
 public class ReceiptService {
+    private static final Logger LOG = Logger.getLogger(ReceiptService.class);
     private EntityDao<Receipt> receiptDao;
     private EntityDao<Line> lineDao;
     private EntityDao<Product> productDao;
@@ -78,12 +78,16 @@ public class ReceiptService {
         List<Product> products = productDao.getAll();
 
         for (Product product : products) {
+            LOG.info(product.getName());
+            LOG.info(param.equals(product.getName()));
             try {
-                if (param.equals(product.getName()) || product.getId() == Integer.parseInt(param) && product.getQuantity() >= quantity) {
+                if (product.getId() == Integer.parseInt(param) && product.getQuantity() >= quantity) {
                     return createLine(receipt, product, quantity);
                 }
-            } catch (NumberFormatException nfe) {
-                return null;
+            } catch (NumberFormatException e) {
+                if (param.equals(product.getName())) {
+                    return createLine(receipt, product, quantity);
+                }
             }
         }
         return null;

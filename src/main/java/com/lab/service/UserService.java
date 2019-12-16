@@ -25,7 +25,4 @@ public class UserService {
                 .findFirst();
     }
 
-    public boolean isCashier(User user) {
-        return user.getRole().equals(Role.CASHIER);
-    }
 }

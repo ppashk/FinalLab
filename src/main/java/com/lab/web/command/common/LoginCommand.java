@@ -1,6 +1,7 @@
 package com.lab.web.command.common;
 
 import com.lab.entity.User;
+import com.lab.enums.Role;
 import com.lab.factory.ServiceFactory;
 import com.lab.service.ReportService;
 import com.lab.service.UserService;
@@ -44,14 +45,14 @@ public class LoginCommand extends MultipleMethodCommand {
             LOG.info("Login success");
             User user = optionalUser.get();
             session.setAttribute("user", user);
-            if (userService.isCashier(user)) {
+            if (user.getRole().equals(Role.CASHIER)){
                 reportService.createXReport();
                 reportService.createZReport(user);
             }
             return new Page(HOME_REDIRECT,true);
         }
 
-        request.setAttribute("error", "error");
+        request.setAttribute("error", "error.login");
         return new Page(LOGIN_PAGE);
     }
 }

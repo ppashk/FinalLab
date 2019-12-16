@@ -14,7 +14,7 @@
         <c:import url="components/header.jsp"/>
         <main>
             <c:if test="${not empty error}">
-                <div>${error}</div>
+                <div><fmt:message key = "${error}"/></div>
             </c:if>
             <fmt:message key="login.greeting"/>
             <form action="login" method="post">
