@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Dorsa';
+    src: url('../fonts/Dorsa-Regular.eot');
+    src: url('../fonts/Dorsa-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Dorsa-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Open Sans Condensed';
+    src: url('../fonts/OpenSansCondensed-Light.eot');
+    src: url('../fonts/OpenSansCondensed-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/OpenSansCondensed-Light.woff2') format('woff2'),
+    url('../fonts/OpenSansCondensed-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pathway Gothic One';
+    src: url('../fonts/PathwayGothicOne-Regular.eot');
+    src: url('../fonts/PathwayGothicOne-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/PathwayGothicOne-Regular.woff2') format('woff2'),
+    url('../fonts/PathwayGothicOne-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
