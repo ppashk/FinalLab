@@ -18,7 +18,7 @@
     <log4j.version>1.2.17</log4j.version>
     <mysql.version>8.0.17</mysql.version>
     <servlet.api.version>3.1.0</servlet.api.version>
-    <junit.version>4.12</junit.version>
+    <junit.version>4.13.1</junit.version>
     <mockito.version>1.10.19</mockito.version>
     <assertJ.version>3.14.0</assertJ.version>
     <jstl.version>1.2</jstl.version>
